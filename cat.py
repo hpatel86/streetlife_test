@@ -20,5 +20,9 @@ class Cat(object):
 			self.trapped = True
 
 
+	def get_current_position(self):
+		return self.cur_posn
+
+
 	def __str__(self):
 		return 'Cat %d'%self.cat_id

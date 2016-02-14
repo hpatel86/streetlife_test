@@ -8,48 +8,35 @@ class Owner(object):
 		self.cur_posn = initial_posn
 		self.visited = defaultdict(int)
 		self.visited[self.cur_posn] += 1
-		self.prev_posn = None
 		self.found_cat = False
 		self.trapped = False
 
 
 	def move(self, edges):
-		if self.found_cat or self.trapped:
-			return
+		if self.found_cat or self.trapped or not edges:
+			if not edges:
+				self.trapped = True
 
-		if not edges:
-			self.trapped = True
-			return
+			return None
 
-		else:
-			self.prev_posn = self.cur_posn
-			min_visited_node = None
-			min_visited_cnt = None
+		min_cost = None
 
-			if len(edges) == 1:
-				self.cur_posn = edges[0]
+		for edge in sorted(edges):
+			if edge not in self.visited:
+				self.cur_posn = edge
+				break
 
 			else:
-				for edge in sorted(edges):
-					if edge in self.visited:
-						if min_visited_node is None or \
-							self.visited[edge] < min_visited_cnt:
-							min_visited_node = edge
-							min_visited_cnt = self.visited[edge]
-						continue
-
+				if min_cost is None or self.visited[edge] < min_cost:
+					min_cost = self.visited[edge]
 					self.cur_posn = edge
-					break
 
-			if self.cur_posn == self.prev_posn:
-				self.cur_posn = min_visited_node
 
-			self.visited[self.cur_posn] += 1
+		self.visited[self.cur_posn] += 1
 
-		self.found_cat = self.cat.cur_posn == self.cur_posn
-		self.cat.found = self.found_cat
 
-		return self.found_cat
+	def get_current_position(self):
+		return self.cur_posn
 
 
 	def __str__(self):
