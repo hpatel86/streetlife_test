@@ -40,7 +40,7 @@ class SimulationManager(object):
 			owner_posn, cat_posn = random.sample(station_ids, 2)
 
 			cat = Cat(idx, cat_posn)
-			owner = Owner(idx, owner_posn, cat)
+			owner = Owner(idx, owner_posn)
 
 			self.owners.append(owner)
 			self.cats.append(cat)
@@ -59,11 +59,11 @@ class SimulationManager(object):
 			for i in owner_idxs:
 
 				connecting_stations_cat = self.tfl_connections.get_connecting_stations(
-					self.cats[i].cur_posn
+					self.cats[i].get_current_position()
 				)
 
 				connecting_stations_owner = self.tfl_connections.get_connecting_stations(
-					self.owners[i].cur_posn
+					self.owners[i].get_current_position()
 				)
 				self.cats[i].move(connecting_stations_cat)
 				self.owners[i].move(connecting_stations_owner)
