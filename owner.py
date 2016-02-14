@@ -1,3 +1,5 @@
+""" Owner class """
+
 from collections import defaultdict
 
 class Owner(object):
@@ -12,6 +14,12 @@ class Owner(object):
 
 
 	def move(self, edges):
+		""" 1. Move to an edge we haven't visited with the minimum value
+									OR
+			2. If visited all the edges, then visit the one we have visited
+				the least
+		"""
+
 		if self.found_cat or self.trapped:
 			return
 

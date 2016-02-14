@@ -1,3 +1,5 @@
+""" Station connections class - mange adding and deleting stations """
+
 from collections import defaultdict
 
 class StationConnections(object):

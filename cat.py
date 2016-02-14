@@ -1,3 +1,5 @@
+""" Cat class """
+
 import random
 
 class Cat(object):

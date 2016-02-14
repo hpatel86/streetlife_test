@@ -1,3 +1,5 @@
+""" Simulation manager interface"""
+
 import csv
 import sys
 import random
@@ -8,8 +10,8 @@ from cat import Cat
 
 class SimulationManager(object):
 
-	def __init__(self, num_owners, stations_file, connections_file):
-		self.num_cats = num_owners
+	def __init__(self, num_cats, stations_file, connections_file):
+		self.num_cats = num_cats
 		self.read_data(stations_file, connections_file)
 		self.create_owners_and_cats()
 		self.max_iters = 100000
@@ -18,7 +20,6 @@ class SimulationManager(object):
 
 
 	def read_data(self, stations_file, connections_file):
-
 		with open(stations_file) as csvfile:
 			reader = csv.reader(csvfile, delimiter=',')
 			self.tfl_stations = {int(row[0]): row[1] for row in reader}
@@ -68,6 +69,7 @@ class SimulationManager(object):
 				self.cats[i].move(connecting_stations_cat)
 				self.owners[i].move(connecting_stations_owner)
 
+				# Remove owner and cat if either are trapped
 				if self.cats[i].trapped or self.owners[i].trapped:
 					owner_idxs.remove(i)
 
